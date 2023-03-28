@@ -19,4 +19,8 @@ contract FundStore{
         balances[msg.sender] -= _amount;
 
     }
+
+    function getBalance() public view returns(uint256){
+        return address(this).balance;
+    }
 }
